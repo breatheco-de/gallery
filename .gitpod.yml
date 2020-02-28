@@ -1,0 +1,5 @@
+tasks:
+- init: npm i now -g
+ports:
+  - port: 8080
+    onOpen: open-browser
