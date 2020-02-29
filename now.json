@@ -1,0 +1,8 @@
+{
+    "build": {
+        "env": {
+            "UPLOAD_CARE_KEY": "@upload_care_key",
+            "UPLOAD_CARE_PUBLIC": "@upload_care_public"
+        }
+    }
+}
