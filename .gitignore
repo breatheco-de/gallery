@@ -60,6 +60,7 @@ public/*
 dist/*
 !dist/index.html
 
+!.env
 !.gitkeep
 !.htaccess
 !.eslintrc
