@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 var PrettierPlugin = require("prettier-webpack-plugin");
+const RobotstxtPlugin = require("robotstxt-webpack-plugin");
 const Dotenv = require('dotenv-webpack');
 
 module.exports = {
@@ -67,6 +68,14 @@ module.exports = {
     new Dotenv({
       safe: true, // load '.env.example' to verify the '.env' variables are all set. Can also be a string to a different file.
       systemvars: true, // load all the predefined 'process.env' variables which will trump anything local per dotenv specs.
-    })
+    }),
+    new RobotstxtPlugin({
+      policy: [
+        {
+          userAgent: "*",
+          disallow: "/"
+        }
+      ]
+    }),
   ]
 };
