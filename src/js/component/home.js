@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Widget } from "@uploadcare/react-widget";
 import Select from "react-select";
 //create your first component
+const HOST = process.env.ASSETS_URL || "https://assets.breatheco.de/";
+const 
 const defaultImg = {
 	uuid: null,
 	description: "",
@@ -19,15 +21,15 @@ export function Home() {
 	const [widgetStep, setWidgetStep] = useState(0);
 	const [pictureData, setPictureData] = useState(defaultImg);
 	useEffect(() => {
-		fetch(process.env.ASSETS_URL + "apis/static/image/all?start=" + start)
+		fetch(HOST + "apis/static/image/all?start=" + start)
 			.then(resp => resp.json())
 			.then(data => setImages(data))
 			.catch(err => console.error(err));
-		fetch(process.env.ASSETS_URL + "apis/static/image/categories")
+		fetch(HOST + "apis/static/image/categories")
 			.then(resp => resp.json())
 			.then(data => setCategories(data))
 			.catch(err => console.error(err));
-		fetch(process.env.ASSETS_URL + "apis/static/image/tags")
+		fetch(HOST + "apis/static/image/tags")
 			.then(resp => resp.json())
 			.then(data => setTags(data))
 			.catch(err => console.error(err));
@@ -47,7 +49,7 @@ export function Home() {
 					<Widget
 						className="form-control"
 						previewStep={true}
-						publicKey={process.env.UPLOAD_CARE_PUBLIC}
+						publicKey={"87bbef8b86f6973ccade"}
 						onFileSelect={file => {
 							console.log("File changed: ", file);
 
@@ -66,7 +68,7 @@ export function Home() {
 										url: info.cdnUrl
 									});
 									fetch(
-										process.env.ASSETS_URL +
+										HOST +
 											"apis/static/image/upload/" +
 											info.uuid,
 										{
@@ -146,7 +148,7 @@ export function Home() {
 							className="btn btn-primary form-control"
 							onClick={() => {
 								fetch(
-									process.env.ASSETS_URL +
+									HOST +
 										"apis/static/image",
 									{
 										method: "POST",
@@ -244,7 +246,7 @@ export function Home() {
 											);
 											if (_delete)
 												fetch(
-													process.env.ASSETS_URL +
+													HOST +
 														"apis/static/image/" +
 														img.uuid,
 													{
