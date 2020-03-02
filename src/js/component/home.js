@@ -16,6 +16,7 @@ export function Home() {
 	const [categories, setCategories] = useState([]);
 	const [tags, setTags] = useState([]);
 	const [filterTags, setFilterTags] = useState([]);
+	const [loading, setLoading] = useState(false);
 	const [filterCategories, setFilterCategories] = useState([]);
 	const [widgetStep, setWidgetStep] = useState(0);
 	const [pictureData, setPictureData] = useState(defaultImg);
@@ -49,6 +50,17 @@ export function Home() {
 						className="form-control"
 						previewStep={true}
 						publicKey={"87bbef8b86f6973ccade"}
+						validators={[
+							fileInfo => {
+								console.log("Some validation", fileInfo);
+								if (fileInfo.size > 400000) {
+									alert("File cannot be bigger than 400kb");
+									throw new Error(
+										"File cannot be bigger than 400kb"
+									);
+								}
+							}
+						]}
 						onFileSelect={file => {
 							console.log("File changed: ", file);
 
@@ -145,7 +157,9 @@ export function Home() {
 						</div>
 						<button
 							className="btn btn-primary form-control"
+							disabled={loading}
 							onClick={() => {
+								setLoading(true);
 								fetch(
 									HOST +
 										"apis/static/image",
@@ -171,18 +185,17 @@ export function Home() {
 												images
 											)
 										);
+										setLoading(false);
 										setPictureData(defaultImg);
 										setWidgetStep(0);
 									})
-									.catch(
-										err =>
-											console.error(err) ||
-											alert(
-												"There was an error uploading the image"
-											)
-									);
+									.catch(err => {
+										setLoading(false);
+										console.error(err);
+										alert("There was an error uploading the image")
+									});
 							}}>
-							Save
+							{ loading ? "Loading...":"Save"}
 						</button>
 					</div>
 				</div>
