@@ -2,5 +2,13 @@
     "env": {
         "ASSETS_URL": "@assets_url",
         "UPLOAD_CARE_PUBLIC": "@upload_care_public"
-    }
+    },
+    "builds": [
+        {
+          "src": "package.json",
+          "use": "@now/static-build",
+          "config": { "distDir": "public" }
+        },
+        { "src": "api/*.js", "use": "@now/node" }
+    ]
 }

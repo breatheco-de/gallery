@@ -65,6 +65,7 @@
 		"react": "^16.8.6",
 		"react-dom": "^16.8.6",
 		"react-polyfills": "0.0.1",
-		"react-select": "^3.0.8"
+		"react-select": "^3.0.8",
+		"uploadcare": "^0.4.5"
 	}
 }
