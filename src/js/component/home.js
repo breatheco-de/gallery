@@ -3,7 +3,6 @@ import { Widget } from "@uploadcare/react-widget";
 import Select from "react-select";
 //create your first component
 const HOST = process.env.ASSETS_URL || "https://assets.breatheco.de/";
-const 
 const defaultImg = {
 	uuid: null,
 	description: "",
