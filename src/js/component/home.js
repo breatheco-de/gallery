@@ -101,69 +101,67 @@ export function Home() {
 							console.log("Upload completed:", info)
 						}
 					/>
-					<div>
-						<div className="row my-2">
-							<div className="col">
-								<input
-									type="text"
-									placeholder="What is this file about?"
-									className="form-control"
-									onChange={e =>
-										setPictureData({
-											...pictureData,
-											description: e.target.value
-										})
-									}
-									value={pictureData.description}
-								/>
+					{pictureData.uuid && (
+						<div>
+							<div className="row my-2">
+								<div className="col">
+									<input
+										type="text"
+										placeholder="What is this file about?"
+										className="form-control"
+										onChange={e =>
+											setPictureData({
+												...pictureData,
+												description: e.target.value
+											})
+										}
+										value={pictureData.description}
+									/>
+								</div>
 							</div>
-						</div>
-						<div className="row mb-2">
-							<div className="col">
-								<Select
-									placeholder="Select one categoy"
-									value={pictureData.category}
-									onChange={value =>
-										setPictureData({
-											...pictureData,
-											category: value
-										})
-									}
-									options={categories.map(cat => ({
-										value: cat,
-										label: cat
-									}))}
-								/>
+							<div className="row mb-2">
+								<div className="col">
+									<Select
+										placeholder="Select one categoy"
+										value={pictureData.category}
+										onChange={value =>
+											setPictureData({
+												...pictureData,
+												category: value
+											})
+										}
+										options={categories.map(cat => ({
+											value: cat,
+											label: cat
+										}))}
+									/>
+								</div>
 							</div>
-						</div>
-						<div className="row mb-2">
-							<div className="col">
-								<Select
-									isMulti
-									placeholder="Add some tags"
-									value={pictureData.tags}
-									onChange={values =>
-										setPictureData({
-											...pictureData,
-											tags: values
-										})
-									}
-									options={tags.map(t => ({
-										value: t,
-										label: t
-									}))}
-								/>
+							<div className="row mb-2">
+								<div className="col">
+									<Select
+										isMulti
+										placeholder="Add some tags"
+										value={pictureData.tags}
+										onChange={values =>
+											setPictureData({
+												...pictureData,
+												tags: values
+											})
+										}
+										options={tags.map(t => ({
+											value: t,
+											label: t
+										}))}
+									/>
+								</div>
 							</div>
-						</div>
-						<button
-							className="btn btn-primary form-control"
-							disabled={loading}
-							onClick={() => {
-								setLoading(true);
-								fetch(
-									HOST +
-										"apis/static/image",
-									{
+							<button
+								className="btn btn-primary form-control"
+								disabled={loading}
+								onClick={() => {
+									setLoading(true);
+									fetch(HOST + "apis/static/image", {
 										method: "POST",
 										headers: {
 											"Content-Type": "application/json"
@@ -176,28 +174,30 @@ export function Home() {
 												.map(t => t.value)
 												.join(",")
 										})
-									}
-								)
-									.then(resp => resp.json())
-									.then(newImg => {
-										setImages(
-											[newImg[pictureData.uuid]].concat(
-												images
-											)
-										);
-										setLoading(false);
-										setPictureData(defaultImg);
-										setWidgetStep(0);
 									})
-									.catch(err => {
-										setLoading(false);
-										console.error(err);
-										alert("There was an error uploading the image")
-									});
-							}}>
-							{ loading ? "Loading...":"Save"}
-						</button>
-					</div>
+										.then(resp => resp.json())
+										.then(newImg => {
+											setImages(
+												[
+													newImg[pictureData.uuid]
+												].concat(images)
+											);
+											setLoading(false);
+											setPictureData(defaultImg);
+											setWidgetStep(0);
+										})
+										.catch(err => {
+											setLoading(false);
+											console.error(err);
+											alert(
+												"There was an error uploading the image"
+											);
+										});
+								}}>
+								{loading ? "Loading..." : "Save"}
+							</button>
+						</div>
+					)}
 				</div>
 			) : (
 				""
